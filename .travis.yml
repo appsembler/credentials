@@ -1,8 +1,5 @@
 language: python
 
-python:
-  - "3.5"
-
 branches:
   only:
     - master
@@ -26,7 +23,8 @@ before_install:
 
 matrix:
   include:
-    - env: TESTNAME=quality-and-translations
+    - python: 3.5
+      env: TESTNAME=quality-and-translations
       install: true
       script:
         - make exec-requirements
@@ -34,8 +32,8 @@ matrix:
         - make exec-validate-translations
         - make exec-quality
         - make exec-check_keywords
-
-    - env: TESTNAME=acceptance-tests
+    - python: 3.5
+      env: TESTNAME=acceptance-tests
       install:
         - make exec-requirements
       script:
@@ -43,8 +41,15 @@ matrix:
         - make exec-accept
       addons:
           firefox: latest
-
-    - env: TOXENV=django22
+    - python: 3.5
+      env: TOXENV=django22
+      install: true
+      script:
+        - make exec-requirements
+        - make exec-static
+        - make exec-tests
+    - python: 3.8
+      env: TOXENV=django22
       install: true
       script:
         - make exec-requirements
